@@ -9,6 +9,7 @@ function attack(){
         death();
     }
     document.getElementById("enemyHealth").innerHTML = "Health: " + enemy.health;
+    animatie();
 }
 function death(){
     player.experience = player.experience + 25;
@@ -30,7 +31,7 @@ function death(){
         document.getElementById("experience").innerHTML = "Experience: " + player.experience;
 
         if(player.level === 20){
-            document.getElementById("rifle").innerHTML = "Rifle: M1 Garand";
+            document.getElementById("rifle").innerHTML = "Rifle: S.V.D";
             document.getElementById("rank").innerHTML = "Rank: Ranger";
         }
         if(player.level === 50){
@@ -78,4 +79,15 @@ function upgradeuitvoer() {
         death();
     }
     document.getElementById("enemyHealth").innerHTML = "Health: " + enemy.health;
+}
+function animatie() {
+    soldier.src="afbeeldingen/soldier2.png";
+    sniper.src="afbeeldingen/sniper2.png";
+    setTimeout(normal, 100);
+    clearTimeout(normal);
+}
+
+function normal() {
+    soldier.src="afbeeldingen/soldier.png";
+    sniper.src="afbeeldingen/sniper.png";
 }
