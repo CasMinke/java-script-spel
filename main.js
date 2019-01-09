@@ -5,9 +5,8 @@ var costupgr1 = 5;
 var costupgr2 = 10;
 
 function attack(){
-    animatie();
     enemy.health = enemy.health - player.damage;
-
+    animatie();
     if (enemy.health <= 0){
         death();
     }
@@ -82,12 +81,13 @@ function upgrade2(){
 function upgradeuitvoer() {
     enemy.health = enemy.health - 1;
     if(enemy.health <= 0){
+        animatie();
         death();
     }
     document.getElementById("enemyHealth").innerHTML = "Health: " + enemy.health;
 }
 function animatie() {
-    if (enemy.health >= 11) {
+    if (enemy.health > 0) {
         soldier.src = "afbeeldingen/soldier2.png";
         sniper.src = "afbeeldingen/sniper2.png";
         setTimeout(normalsoldier, 100);
