@@ -1,15 +1,17 @@
 var player = {level: 1, damage: 10, experience: 0, coins: 0, kills: 0};
 var enemy = {level: 1, health: 100};
 var damageovertime = 0;
+var costupgr1 = 5;
+var costupgr2 = 10;
 
 function attack(){
+    animatie();
     enemy.health = enemy.health - player.damage;
 
     if (enemy.health <= 0){
         death();
     }
     document.getElementById("enemyHealth").innerHTML = "Health: " + enemy.health;
-    animatie();
 }
 function death(){
     player.experience = player.experience + 25;
@@ -52,23 +54,27 @@ function death(){
         }
     }
 }
-function upgrade() {
-    if(player.coins < 5){
-        alert("om deze upgrade te kunnen kopen moet je 5 Dogtags hebben");
+function upgrade1() {
+    if(player.coins < costupgr1){
+        alert("om deze upgrade te kunnen kopen moet je " + costupgr1 + " Dogtags hebben");
     }else {
         player.damage++;
-        player.coins = player.coins - 5;
+        player.coins = player.coins - costupgr1;
+        costupgr1 = costupgr1 + 5;
+        document.getElementById("upgrade1").innerHTML = costupgr1 + " Dogtags: upgrade Damage per shot plus 1";
         document.getElementById("coins").innerHTML = "Dogtags: " + player.coins;
         document.getElementById("damage").innerHTML = "Damage per shot: " + player.damage;
     }
 }
-function upgradeaanvraag(){
-    if(player.coins < 10){
-        alert("om deze upgrade te kunnen kopen moet je 10 Dogtags hebben");
+function upgrade2(){
+    if(player.coins < costupgr2){
+        alert("om deze upgrade te kunnen kopen moet je " + costupgr2 + " Dogtags hebben");
     }else {
-        player.coins = player.coins - 10;
+        player.coins = player.coins - costupgr2;
         document.getElementById("coins").innerHTML = "Dogtags: " + player.coins;
+        costupgr2 = costupgr2 + 10;
         damageovertime++;
+        document.getElementById("upgrade2").innerHTML = costupgr2 + " Dogtags: upgrade Bleed damage plus 1LVL";
         document.getElementById("damageovertime").innerHTML = "Bleed damage: LVL" + damageovertime;
         var timer = setInterval(upgradeuitvoer, 1000);
     }
@@ -81,13 +87,26 @@ function upgradeuitvoer() {
     document.getElementById("enemyHealth").innerHTML = "Health: " + enemy.health;
 }
 function animatie() {
-    soldier.src="afbeeldingen/soldier2.png";
-    sniper.src="afbeeldingen/sniper2.png";
-    setTimeout(normal, 100);
-    clearTimeout(normal);
+    if (enemy.health >= 11) {
+        soldier.src = "afbeeldingen/soldier2.png";
+        sniper.src = "afbeeldingen/sniper2.png";
+        setTimeout(normalsoldier, 100);
+        setTimeout(normalsniper, 100);
+        clearTimeout(normalsoldier);
+        clearTimeout(normalsniper);
+
+    }else {
+        soldier.src = "afbeeldingen/soldierdied.png", setTimeout(normalsoldier,1000);
+        sniper.src = "afbeeldingen/sniper2.png",setTimeout(normalsniper,100);
+        clearTimeout(normalsoldier);
+        clearTimeout(normalsniper);
+    }
 }
 
-function normal() {
-    soldier.src="afbeeldingen/soldier.png";
-    sniper.src="afbeeldingen/sniper.png";
+function normalsoldier() {
+    soldier.src = "afbeeldingen/soldier.png";
+}
+
+function normalsniper(){
+    sniper.src = "afbeeldingen/sniper.png"
 }
